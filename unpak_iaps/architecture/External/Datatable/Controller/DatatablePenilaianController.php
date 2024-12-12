@@ -24,6 +24,7 @@ class DatatablePenilaianController extends Controller
         $listPenilaian = $listPenilaian->map(function($item){
             return (object)[
                 "nama_matriks"=>$item->GetMatriks()?->GetNama(),
+                "deskripsi"=>$item->GetMatriks()?->GetDeskripsi(),
                 "berkas"=> $item->GetBerkas()->map(fn($child)=> $child->toArray())->toArray()
             ];
         });

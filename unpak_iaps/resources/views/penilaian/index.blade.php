@@ -23,7 +23,7 @@
                     <div class="card-body row">
                         <div class="col-12">
                             <label>Tahun</label>
-                            <input type="text" name="tahun_filter" class=" form-control tahun_filter" value="" autocomplete="off">
+                            <input type="text" name="tahun_filter" class=" form-control tahun_filter" value="{{date('Y')}}" autocomplete="off">
                         </div>
                         <div class="col-12">
                             <button class="btn btn-primary btn-filter">Filter</button>
@@ -114,7 +114,7 @@
             });
 
             let table = eTable({
-                url: `{{ route('datatable.Penilaian.index') }}?level=${level}`,
+                url: `{{ route('datatable.Penilaian.index') }}?level=${level}&tahun={{date('Y')}}`,
             }, [
                 {
                     data: 'DT_RowIndex', 

@@ -31,23 +31,30 @@ class GetAllPenilaianQueryHandler extends Query
             }
             $penilaian = $penilaian->get();
 
-            $datas[$matrik->nama] = $penilaian->count()? $penilaian->toArray():[];
+            $datas[$matrik->nama."#".$matrik->id] = $penilaian->count()? $penilaian->toArray():[];
         }
 
         $record = collect($datas)
-                    ->flatMap(fn($group, $nama_matriks) => collect([ // Menggunakan koleksi
-                    collect([ // Menggunakan koleksi untuk setiap grup
-                        'nama_matriks' => $nama_matriks,
-                        'berkas' => collect($group)->map(function($data) {
-                            return collect($data);
-                        } )  // Membuat koleksi dari array berkas
-                    ])
-                ]));
+                    ->flatMap(function($group, $nama_matriks){
+                        [$nama_matriks_,$id] = explode("#",$nama_matriks);
+                        $data = MatriksModel::find($id);
+
+                        return collect([ // Menggunakan koleksi
+                            collect([ // Menggunakan koleksi untuk setiap grup
+                                'id' => $id,
+                                'nama_matriks' => $nama_matriks_,
+                                'deskripsi' => $data?->deskripsi,
+                                'berkas' => collect($group)->map(function($data) {
+                                    return collect($data);
+                                } )  // Membuat koleksi dari array berkas
+                            ])
+                        ]);
+                    });
 
         if($query->getOption()==TypeData::Default) return new Collection($datas);
 
         return $record->transform( function($data){
-            return Creator::buildPenilaian(PenilaianEntitas::make(null,new Matriks(null, $data["nama_matriks"], null),null,null,"x",$data["berkas"]));
+            return Creator::buildPenilaian(PenilaianEntitas::make(null,new Matriks($data["id"], $data["nama_matriks"], $data["deskripsi"]),null,null,null,$data["berkas"]));
         });
     }
 }
