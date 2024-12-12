@@ -42,6 +42,7 @@ class PenilaianController extends Controller
                 $request->get('matriks'),
                 $request->get('nama_berkas'),
                 $request->get('url'),
+                $request->get('tahun'),
             ));
             Session::flash(TypeNotif::Create->val(), "berhasil simpan data penilaian");
 
@@ -76,6 +77,7 @@ class PenilaianController extends Controller
                 $request->get('matriks'),
                 $request->get('nama_berkas'),
                 $request->get('url'),
+                $request->get('tahun'),
             ));
             Session::flash(TypeNotif::Update->val(), "berhasil ubah data");
 

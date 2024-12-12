@@ -13,6 +13,7 @@ class CreatePenilaianCommandHandler extends CommandHandler
         $peniliaianBaru->id_matriks = $command->GetMatriks();
         $peniliaianBaru->nama_berkas = $command->GetNamaBerkas();
         $peniliaianBaru->url = $command->GetUrl();
+        $peniliaianBaru->tahun = $command->GetTahun();
         $peniliaianBaru->saveOrFail();
     }
 }

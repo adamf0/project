@@ -1,6 +1,8 @@
 <?php
 
 //use Architecture\External\Api\Controller\ApiAdministrasiAreaController;
+
+use Architecture\External\Api\Controller\ApiPenilaianController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +19,4 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-//Route::get('/insentif/export', [ApiInsentifController::class,'export'])->name('api.Insentif.export');
+Route::post('/penilaian', [ApiPenilaianController::class,'create'])->name('api.Penilaian.create');

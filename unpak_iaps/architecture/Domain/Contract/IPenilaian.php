@@ -10,6 +10,7 @@ abstract class IPenilaian extends BaseEntity{
     public ?Matriks $matriks;
     public $nama_berkas;
     public $url;
+    public $tahun=null;
     public Collection $berkas;
 
     public function GetMatriks()
@@ -23,6 +24,10 @@ abstract class IPenilaian extends BaseEntity{
     public function GetUrl()
     {
         return $this->url;
+    }
+    public function GetTahun()
+    {
+        return $this->tahun;
     }
     public function GetBerkas()
     {

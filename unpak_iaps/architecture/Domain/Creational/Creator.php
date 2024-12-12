@@ -23,6 +23,7 @@ class Creator{
             $factory->GetMatriks(),
             $factory->GetNamaBerkas(),
             $factory->GetUrl(),
+            $factory->GetTahun(),
             $factory->GetBerkas(),
         );
     }

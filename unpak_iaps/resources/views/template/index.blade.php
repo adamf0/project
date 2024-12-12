@@ -8,7 +8,7 @@
   <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
-  <title>IAPS</title>
+  <title>APIK</title>
   <link href="{{ Utility::loadAsset('assets/css/style.css') }}" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="{{ Utility::loadAsset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -180,12 +180,20 @@
 
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-      <x-sidebar-item-menu title="Dashboard" icon="bi bi-menu-button-wide" link="{{route('dashboard.index')}}" :active="Utility::stateMenu(['dashboard'],request())" />      
+      @if(Session::get('level')=="guest")
+      <x-sidebar-item-menu title="Dashboard" icon="bi bi-menu-button-wide" link="{{route('penilaian.index')}}" :active="Utility::stateMenu(['penilaian'],request())" />
+      @else
+      <x-sidebar-item-menu title="Dashboard" icon="bi bi-menu-button-wide" link="{{route('dashboard.index')}}" :active="Utility::stateMenu(['dashboard'],request())" />
+      @endif
+      
       @if(Session::get('level')=="admin")
       <x-sidebar-item-menu title="User" icon="bi bi-menu-button-wide" link="{{route('user.index')}}" :active="Utility::stateMenu(['user'],request())" />
       <x-sidebar-item-menu title="Matriks" icon="bi bi-menu-button-wide" link="{{route('matriks.index')}}" :active="Utility::stateMenu(['matriks'],request())" />
       @endif
+
+      @if(Session::get('level')=="admin" || Session::get('level')=="prodi")
       <x-sidebar-item-menu title="Penilaian" icon="bi bi-menu-button-wide" link="{{route('penilaian.index')}}" :active="Utility::stateMenu(['penilaian'],request())" />
+      @endif
     </ul>
   </aside><!-- End Sidebar-->
 

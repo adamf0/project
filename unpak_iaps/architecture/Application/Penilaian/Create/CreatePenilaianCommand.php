@@ -7,7 +7,7 @@ use Architecture\Shared\TypeData;
 
 class CreatePenilaianCommand extends Command
 {
-    public function __construct(public $matriks, public $nama_berkas, public $url, public TypeData $option = TypeData::Entity) {}
+    public function __construct(public $matriks, public $nama_berkas, public $url, public $tahun, public TypeData $option = TypeData::Entity) {}
 
     public function GetMatriks(){
         return $this->matriks;
@@ -15,6 +15,10 @@ class CreatePenilaianCommand extends Command
 
     public function GetNamaBerkas(){
         return $this->nama_berkas;
+    }
+
+    public function GetTahun(){
+        return $this->tahun;
     }
 
     public function GetUrl(){

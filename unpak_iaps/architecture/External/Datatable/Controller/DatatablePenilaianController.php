@@ -17,7 +17,7 @@ class DatatablePenilaianController extends Controller
     ) {}
     
     public function index(Request $request){
-        $q = new GetAllPenilaianQuery();
+        $q = new GetAllPenilaianQuery($request->get('tahun'));
         // $q->SetOffset($request->get('start')??null)->SetLimit($request->get('length')??null);
         
         $listPenilaian = $this->queryBus->ask($q);
@@ -54,10 +54,15 @@ class DatatablePenilaianController extends Controller
                 }
 
             }
-            if(empty($output)){
+            if($request->get('level')!="guest"){
                 $output .= "
                 <li class='list-group-item'>
-                    <a href='".route("penilaian.create")."' class='btn btn-primary'>Tambah</a>
+                    <a href='#' class='btn btn-primary btn-sm btn-add'>Tambah</a>
+                </li>";
+            } else if(empty($output) && $request->get('level')=="guest"){
+                $output .= "
+                <li class='list-group-item'>
+                    Tidak ada berkas
                 </li>";
             }
             $html = "<ul class='list-group' style='max-width: 500px !important;'>$output</ul>";

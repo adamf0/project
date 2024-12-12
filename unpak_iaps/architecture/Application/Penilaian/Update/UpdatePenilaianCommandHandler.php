@@ -15,6 +15,7 @@ class UpdatePenilaianCommandHandler extends CommandHandler
         $Penilaian->id_matriks = $command->GetMatriks();
         $Penilaian->nama_berkas = $command->GetNamaBerkas();
         $Penilaian->url = $command->GetUrl();
+        $Penilaian->tahun = $command->GetTahun();
         if($Penilaian->isDirty()) $Penilaian->saveOrFail();
     }
 }

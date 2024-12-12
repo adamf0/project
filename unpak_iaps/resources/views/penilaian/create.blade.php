@@ -34,6 +34,9 @@
                                     <div class="col-12">
                                         <x-input-text title="Url" name="url" default="{{ old('url') }}"/>
                                     </div>
+                                    <div class="col-12">
+                                        <x-input-text title="Tahun" name="tahun" default="{{ old('tahun') }}"/>
+                                    </div>
                                 </div>
                                 <input type="submit" name="submit" class="btn btn-primary mt-3" value="submit">
                             </form>
