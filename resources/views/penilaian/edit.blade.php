@@ -22,7 +22,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('penilaian.update') }}" method="post">
+                            <form action="{{ route('penilaian.update') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" class="@error('id') is-invalid @enderror" value="{{ old('id',$penilaian->GetId()) }}">
                                 <div class="row">
@@ -34,6 +34,13 @@
                                     </div>
                                     <div class="col-12">
                                         <x-input-text title="Url" name="url" default="{{ old('url',$penilaian->GetUrl()) }}"/>
+                                    </div>
+                                    <div class="col-12">
+                                        <label>File</label>
+                                        <input type="file" name="file" class=" form-control file" value="" autocomplete="off" accept="application/pdf">
+                                        Max Ukuran File Upload: <b>5Mb</b><br>
+                                        Tipe File: <b>PDF</b><br>
+                                        File: {{ $penilaian?->GetFile() }}
                                     </div>
                                     <div class="col-12">
                                         <x-input-text title="Tahun" name="tahun" default="{{ old('tahun',$penilaian->GetTahun()) }}"/>

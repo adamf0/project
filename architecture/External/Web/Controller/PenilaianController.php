@@ -5,6 +5,7 @@ namespace Architecture\External\Web\Controller;
 use App\Http\Controllers\Controller;
 use Architecture\Application\Abstractions\Messaging\ICommandBus;
 use Architecture\Application\Abstractions\Messaging\IQueryBus;
+use Architecture\Application\Abstractions\Pattern\OptionFileDefault;
 use Architecture\Application\Penilaian\Create\CreatePenilaianCommand;
 use Architecture\Application\Penilaian\Delete\DeletePenilaianCommand;
 use Architecture\Application\Penilaian\FirstData\GetPenilaianQuery;
@@ -12,6 +13,7 @@ use Architecture\Application\Penilaian\Update\UpdatePenilaianCommand;
 use Architecture\Domain\Enum\TypeNotif;
 use Architecture\Domain\RuleValidationRequest\Rule\CreatePenilaianRuleReq;
 use Architecture\Domain\RuleValidationRequest\Rule\UpdatePenilaianRuleReq;
+use Architecture\External\Port\FileSystem;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -38,10 +40,17 @@ class PenilaianController extends Controller
                 return redirect()->route('penilaian.create')->withInput()->withErrors($validator->errors()->toArray());    
             } 
             
+            $file = null;
+            if($request->has("file")){
+                $fileSystem = new FileSystem(new OptionFileDefault($request->file("file"), "berkas"));
+                $file = $fileSystem->storeFileWithReplaceFileAndReturnFileLocation();
+            }
+
             $this->commandBus->dispatch(new CreatePenilaianCommand(
                 $request->get('matriks'),
                 $request->get('nama_berkas'),
                 $request->get('url'),
+                $file,
                 $request->get('tahun'),
             ));
             Session::flash(TypeNotif::Create->val(), "berhasil simpan data penilaian");
@@ -72,11 +81,18 @@ class PenilaianController extends Controller
                 return redirect()->route('penilaian.edit',["id"=>$request->get("id")])->withInput()->withErrors($validator->errors()->toArray());    
             } 
             
+            $file = null;
+            if($request->has("file")){
+                $fileSystem = new FileSystem(new OptionFileDefault($request->file("file"), "berkas"));
+                $file = $fileSystem->storeFileWithReplaceFileAndReturnFileLocation();
+            }
+
             $this->commandBus->dispatch(new UpdatePenilaianCommand(
                 $request->get('id'), 
                 $request->get('matriks'),
                 $request->get('nama_berkas'),
                 $request->get('url'),
+                $file,
                 $request->get('tahun'),
             ));
             Session::flash(TypeNotif::Update->val(), "berhasil ubah data");

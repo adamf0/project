@@ -74,6 +74,12 @@
                             <input type="text" name="url" class=" form-control url" value="" autocomplete="off">
                         </div>
                         <div class="col-12">
+                            <label>File</label>
+                            <input type="file" name="file" class=" form-control file" value="" autocomplete="off" accept="application/pdf">
+                            Max Ukuran File Upload: <b>5Mb</b><br>
+                            Tipe File: <b>PDF</b><br>
+                        </div>
+                        <div class="col-12">
                             <label>Tahun</label>
                             <input type="text" name="tahun" class=" form-control tahun" value="" autocomplete="off">
                         </div>
@@ -151,37 +157,55 @@
             });
             btnSave.click(function(e) {
                 e.preventDefault();
+                const fileInput =  $('.file')[0]?.files[0] || null;
+                let error_file = false;
 
-                let dataForm = new FormData();
-                dataForm.append("matriks", matriks);
-                dataForm.append("nama_berkas", $(".nama_berkas").val());
-                dataForm.append("url", $(".url").val());
-                dataForm.append("tahun", $(".tahun").val());
-
-                formInputAdd.hide();
-                formLoaderAdd.show();
-                ERequest(
-                    new Url(`{{route('api.Penilaian.create')}}`, "post", {
-                        'X-CSRF-TOKEN': CSRF_TOKEN
-                    }),
-                    dataForm,
-                    function(response) {
-                        console.log(response);
-                        formInputAdd.show();
-                        formLoaderAdd.hide();
-
-                        table.draw();
-                        alert(response.message);
-                    },
-                    function(xhr, status, error) {
-                        formInputAdd.show();
-                        formLoaderAdd.hide();
-                        // modalAddReviewer.hide();
-                        handleAjaxError(xhr, status, error);
+                if (fileInput!=null || fileInput!=undefined) { //gagal cek ukuran file
+                    const fileSize = fileInput.size;
+                    const fileMb = fileSize / 1024 ** 2;
+                    console.log(`fileMb: ${fileMb}`)
+                    
+                    if(fileMb>5){
+                        error_file = true;
+                        alert("file tidak boleh lebih dari 5MB")
+                    } else{
+                        error_file = false;
                     }
-                );
+                }
 
-                table.draw();
+                if(!error_file){
+                    let dataForm = new FormData();
+                    dataForm.append("matriks", matriks);
+                    dataForm.append("nama_berkas", $(".nama_berkas").val());
+                    dataForm.append("url", $(".url").val());
+                    dataForm.append('file', fileInput);
+                    dataForm.append("tahun", $(".tahun").val());
+
+                    formInputAdd.hide();
+                    formLoaderAdd.show();
+                    ERequest(
+                        new Url(`{{route('api.Penilaian.create')}}`, "post", {
+                            'X-CSRF-TOKEN': CSRF_TOKEN
+                        }),
+                        dataForm,
+                        function(response) {
+                            console.log(response);
+                            formInputAdd.show();
+                            formLoaderAdd.hide();
+
+                            table.draw();
+                            alert(response.message);
+                        },
+                        function(xhr, status, error) {
+                            formInputAdd.show();
+                            formLoaderAdd.hide();
+                            // modalAddReviewer.hide();
+                            handleAjaxError(xhr, status, error);
+                        }
+                    );
+
+                    table.draw();
+                }
             });
 
             $('#tb tbody').on('click', '.btn-add', function(e) {

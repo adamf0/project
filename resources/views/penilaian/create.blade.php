@@ -22,7 +22,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('penilaian.store') }}" method="post">
+                            <form action="{{ route('penilaian.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
@@ -33,6 +33,12 @@
                                     </div>
                                     <div class="col-12">
                                         <x-input-text title="Url" name="url" default="{{ old('url') }}"/>
+                                    </div>
+                                    <div class="col-12">
+                                        <label>File</label>
+                                        <input type="file" name="file" class=" form-control file" value="" autocomplete="off" accept="application/pdf">
+                                        Max Ukuran File Upload: <b>5Mb</b><br>
+                                        Tipe File: <b>PDF</b><br>
                                     </div>
                                     <div class="col-12">
                                         <x-input-text title="Tahun" name="tahun" default="{{ old('tahun') }}"/>

@@ -8,6 +8,7 @@ use Architecture\Application\Abstractions\Messaging\IQueryBus;
 use Architecture\Application\Penilaian\List\GetAllPenilaianQuery;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables as DataTables;
+use Architecture\Shared\Facades\Utility;
 
 class DatatablePenilaianController extends Controller
 {
@@ -38,7 +39,7 @@ class DatatablePenilaianController extends Controller
                     $output .= "
                     <li class='list-group-item'>
                         <div class='d-flex flex-wrap align-content-center justify-content-between'>
-                                <a href='".$berkas['url']."' target='_blank' class='col-6'>".$berkas['nama_berkas']."</a>
+                                <a href='".(empty($berkas['file'])? $berkas['url']:Utility::loadAsset("berkas/".$berkas['file']))."' target='_blank' class='col-6'>".$berkas['nama_berkas']."</a>
                                 <div class='col-6'>
                                     <div class='d-flex flex-wrap gap-2 justify-content-end'>
                                         <a href='".route("penilaian.edit",["id"=>$berkas["id"]])."' class='btn btn-sm btn-warning'>Edit</a> 
@@ -50,7 +51,7 @@ class DatatablePenilaianController extends Controller
                 } else{
                     $output .= "
                     <li class='list-group-item'>
-                        <a href='".$berkas['url']."' target='_blank' class='col-6'>".$berkas['nama_berkas']."</a>
+                        <a href='".(empty($berkas['file'])? $berkas['url']:Utility::loadAsset("berkas/".$berkas['file']))."' target='_blank' class='col-6'>".$berkas['nama_berkas']."</a>
                     </li>";
                 }
 

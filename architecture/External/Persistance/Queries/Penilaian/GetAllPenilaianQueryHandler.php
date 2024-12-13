@@ -54,7 +54,7 @@ class GetAllPenilaianQueryHandler extends Query
         if($query->getOption()==TypeData::Default) return new Collection($datas);
 
         return $record->transform( function($data){
-            return Creator::buildPenilaian(PenilaianEntitas::make(null,new Matriks($data["id"], $data["nama_matriks"], $data["deskripsi"]),null,null,null,$data["berkas"]));
+            return Creator::buildPenilaian(PenilaianEntitas::make(null,new Matriks($data["id"], $data["nama_matriks"], $data["deskripsi"]),null,null,null,null,$data["berkas"]));
         });
     }
 }

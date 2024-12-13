@@ -105,6 +105,7 @@ CREATE TABLE `penilaian` (
   `id_matriks` int(11) NOT NULL,
   `nama_berkas` text NOT NULL,
   `url` text DEFAULT NULL,
+  `file` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

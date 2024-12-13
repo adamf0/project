@@ -25,6 +25,7 @@ class GetPenilaianQueryHandler extends Query
             $data?->Matriks==null? null:new Matriks($data?->Matriks?->id, $data?->Matriks?->nama, $data?->Matriks?->deskripsi),
             $data->nama_berkas, 
             $data->url, 
+            $data->file, 
             $data->tahun, 
             collect([])
         ));
