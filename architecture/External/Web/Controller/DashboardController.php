@@ -16,7 +16,10 @@ class DashboardController extends Controller
         protected IQueryBus $queryBus
     ) {}
     
-    public function Index(){        
+    public function Index(){     
+        if(Session::get("level")=="guest"){
+            return redirect()->route("penilaian.index");
+        }   
         return view('dashboard.index');
     }
 }
