@@ -9,7 +9,7 @@ class UpdatePenilaianRuleReq{
             "matriks" => "required|string",
             "nama_berkas" => "required|string",
             // "url" => "required_without:file|nullable|string",
-            "file" => "required_without:url|nullable|file|mimes:pdf|max:5120",
+            // "file" => "required_without:url|nullable|file|mimes:pdf|max:5120",
         ]; 
     }
 }
