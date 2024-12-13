@@ -1,5 +1,6 @@
 <?php
 
+use Architecture\External\Web\Controller\AccountController;
 use Architecture\External\Web\Controller\AuthController;
 use Architecture\External\Web\Controller\DashboardController;
 use Architecture\External\Web\Controller\MatriksController;
@@ -51,6 +52,9 @@ Route::middleware([CheckSession::class])->group(function () {
     Route::get('penilaian/edit/{id}', [PenilaianController::class, 'edit'])->name('penilaian.edit');
     Route::post('penilaian/update', [PenilaianController::class, 'update'])->name('penilaian.update');
     Route::get('penilaian/delete/{id}', [PenilaianController::class, 'delete'])->name('penilaian.delete');
+
+    Route::get('account', [AccountController::class, 'index'])->name('account.index');
+    Route::post('account/update', [AccountController::class, 'update'])->name('account.update');
 
 });
 

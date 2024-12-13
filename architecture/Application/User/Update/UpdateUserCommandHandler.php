@@ -18,7 +18,10 @@ class UpdateUserCommandHandler extends CommandHandler
             $User->password = Hash::make($command->GetPassword());
             $User->plain_password = $command->GetPassword();
         }
-        $User->level = $command->GetLevel();
+        if(!empty($command->GetLevel())){
+            $User->level = $command->GetLevel();
+        }
+        
         if($User->isDirty()) $User->saveOrFail();
     }
 }

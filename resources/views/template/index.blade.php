@@ -167,6 +167,12 @@
               <span>{{Utility::getLevel()}}</span>
             </li>
             <li>
+              <a class="dropdown-item d-flex align-items-center" href="{{route('account.index')}}">
+                <i class="bi bi-gear"></i>
+                <span>Account</span>
+              </a>
+            </li>
+            <li>
               <a class="dropdown-item d-flex align-items-center" href="{{route('auth.logout')}}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>

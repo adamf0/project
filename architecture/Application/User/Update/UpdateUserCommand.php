@@ -10,7 +10,7 @@ use Architecture\Shared\TypeData;
 class UpdateUserCommand extends Command
 {
     use IdentityCommand,NamingCommand;
-    public function __construct(public $id, public $nama, public $username, public $password, public $level, public TypeData $option = TypeData::Entity) {}
+    public function __construct(public $id, public $nama, public $username, public $password, public $level=null, public TypeData $option = TypeData::Entity) {}
 
     public function GetUsername(){
         return $this->username;
