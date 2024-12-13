@@ -37,6 +37,9 @@
                                     <div class="col-12">
                                         <label>File</label>
                                         <input type="file" name="file" class=" form-control file" value="" autocomplete="off" accept="application/pdf">
+                                        @error('file')
+                                            <span class="text-danger">{{ $message }}</span><br>
+                                        @enderror
                                         Max Ukuran File Upload: <b>5Mb</b><br>
                                         Tipe File: <b>PDF</b><br>
                                     </div>
