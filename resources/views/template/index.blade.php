@@ -198,7 +198,8 @@
       @endif
 
       @if(Session::get('level')=="admin" || Session::get('level')=="prodi")
-      <x-sidebar-item-menu title="Penilaian" icon="bi bi-menu-button-wide" link="{{route('penilaian.index')}}" :active="Utility::stateMenu(['penilaian'],request())" />
+      <x-sidebar-item-menu title="LED" icon="bi bi-menu-button-wide" link="{{route('penilaian.index')}}" :active="Utility::stateMenu(['penilaian'],request())" />
+      <x-sidebar-item-menu title="Dokumen Induk" icon="bi bi-menu-button-wide" link="{{route('dokumenInduk.index')}}" :active="Utility::stateMenu(['dokumenInduk'],request())" />
       @endif
     </ul>
   </aside><!-- End Sidebar-->

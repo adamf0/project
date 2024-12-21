@@ -2,6 +2,7 @@
 
 // use Architecture\External\Datatable\Controller\DatatableAkurasiPenelitianController;
 
+use Architecture\External\Datatable\Controller\DatatableDokumenIndukController;
 use Architecture\External\Datatable\Controller\DatatableMatriksController;
 use Architecture\External\Datatable\Controller\DatatablePenilaianController;
 use Architecture\External\Datatable\Controller\DatatableUserController;
@@ -23,4 +24,5 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('matriks', [DatatableMatriksController::class,'index'])->name('datatable.Matriks.index');
 Route::get('penilaian', [DatatablePenilaianController::class,'index'])->name('datatable.Penilaian.index');
+Route::get('dokumen_induk', [DatatableDokumenIndukController::class,'index'])->name('datatable.DokumenInduk.index');
 Route::get('user', [DatatableUserController::class,'index'])->name('datatable.User.index');

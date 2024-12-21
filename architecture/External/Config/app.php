@@ -163,6 +163,7 @@ return [
 
         Architecture\External\Config\Provider\MatriksServiceProvider::class,
         Architecture\External\Config\Provider\PenilaianServiceProvider::class,
+        Architecture\External\Config\Provider\DokumenIndukServiceProvider::class,
         Architecture\External\Config\Provider\UserServiceProvider::class,
         /*
          * Application Service Providers...

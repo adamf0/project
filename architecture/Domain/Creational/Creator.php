@@ -1,9 +1,11 @@
 <?php
 namespace Architecture\Domain\Creational;
 
+use Architecture\Domain\Contract\IDokumenInduk;
 use Architecture\Domain\Contract\IMatriks;
 use Architecture\Domain\Contract\IPenilaian;
 use Architecture\Domain\Contract\IUser;
+use Architecture\Domain\Entity\DokumenInduk;
 use Architecture\Domain\Entity\Matriks;
 use Architecture\Domain\Entity\Penilaian;
 use Architecture\Domain\Entity\User;
@@ -26,6 +28,15 @@ class Creator{
             $factory->GetFile(),
             $factory->GetTahun(),
             $factory->GetBerkas(),
+        );
+    }
+    public static function buildDokumenInduk(IDokumenInduk $factory){
+        return new DokumenInduk(
+            $factory->GetId(),
+            $factory->GetNamaBerkas(),
+            $factory->GetUrl(),
+            $factory->GetFile(),
+            $factory->GetTahun(),
         );
     }
     public static function buildUser(IUser $factory){

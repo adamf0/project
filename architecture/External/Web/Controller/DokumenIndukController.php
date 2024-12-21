@@ -6,19 +6,17 @@ use App\Http\Controllers\Controller;
 use Architecture\Application\Abstractions\Messaging\ICommandBus;
 use Architecture\Application\Abstractions\Messaging\IQueryBus;
 use Architecture\Application\Abstractions\Pattern\OptionFileDefault;
-use Architecture\Application\Penilaian\Create\CreatePenilaianCommand;
-use Architecture\Application\Penilaian\Delete\DeletePenilaianCommand;
-use Architecture\Application\Penilaian\FirstData\GetPenilaianQuery;
-use Architecture\Application\Penilaian\Update\UpdatePenilaianCommand;
+use Architecture\Application\DokumenInduk\Delete\DeleteDokumenIndukCommand;
+use Architecture\Application\DokumenInduk\FirstData\GetDokumenIndukQuery;
+use Architecture\Application\DokumenInduk\Update\UpdateDokumenIndukCommand;
 use Architecture\Domain\Enum\TypeNotif;
-use Architecture\Domain\RuleValidationRequest\Rule\CreatePenilaianRuleReq;
-use Architecture\Domain\RuleValidationRequest\Rule\UpdatePenilaianRuleReq;
+use Architecture\Domain\RuleValidationRequest\Rule\UpdateDokumenIndukRuleReq;
 use Architecture\External\Port\FileSystem;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class PenilaianController extends Controller
+class DokumenIndukController extends Controller
 {
     public function __construct(
         protected ICommandBus $commandBus,
@@ -26,18 +24,18 @@ class PenilaianController extends Controller
     ) {}
     
     public function Index(){
-        return view('penilaian.index');
+        return view('dokumen_induk.index');
     }
 
     // public function create(){
-    //     return view('penilaian.create');
+    //     return view('dokumen_induk.create');
     // }
     // public function store(Request $request){
     //     try {
-    //         $validator      = validator($request->all(), CreatePenilaianRuleReq::create());
+    //         $validator      = validator($request->all(), CreateDokumenIndukRuleReq::create());
 
     //         if(count($validator->errors())){
-    //             return redirect()->route('penilaian.create')->withInput()->withErrors($validator->errors()->toArray());    
+    //             return redirect()->route('dokumenInduk.create')->withInput()->withErrors($validator->errors()->toArray());    
     //         } 
             
     //         $file = null;
@@ -46,8 +44,7 @@ class PenilaianController extends Controller
     //             $file = $fileSystem->storeFileWithReplaceFileAndReturnFileLocation();
     //         }
 
-    //         $this->commandBus->dispatch(new CreatePenilaianCommand(
-    //             $request->get('matriks'),
+    //         $this->commandBus->dispatch(new CreateDokumenIndukCommand(
     //             $request->get('nama_berkas'),
     //             $request->get('url'),
     //             $file,
@@ -55,41 +52,40 @@ class PenilaianController extends Controller
     //         ));
     //         Session::flash(TypeNotif::Create->val(), "berhasil simpan data penilaian");
 
-    //         return redirect()->route('penilaian.index');
+    //         return redirect()->route('dokumenInduk.index');
     //     } catch (Exception $e) {
     //         Session::flash(TypeNotif::Error->val(), $e->getMessage());
-    //         return redirect()->route('penilaian.create')->withInput();
+    //         return redirect()->route('dokumenInduk.create')->withInput();
     //     }
     // }
     public function edit($id){
         try {
-            $penilaian = $this->queryBus->ask(new GetPenilaianQuery($id));
+            $penilaian = $this->queryBus->ask(new GetDokumenIndukQuery($id));
             
-            return view('penilaian.edit',[
+            return view('dokumen_induk.edit',[
                 "penilaian"=>$penilaian
             ]);
         } catch (Exception $e) {
             Session::flash(TypeNotif::Error->val(), $e->getMessage());
-            return redirect()->route('penilaian.index');
+            return redirect()->route('dokumenInduk.index');
         }
     }
     public function update(Request $request){
         try {
-            $validator      = validator($request->all(), UpdatePenilaianRuleReq::create());
+            $validator      = validator($request->all(), UpdateDokumenIndukRuleReq::create());
 
             if(count($validator->errors())){
-                return redirect()->route('penilaian.edit',["id"=>$request->get("id")])->withInput()->withErrors($validator->errors()->toArray());    
+                return redirect()->route('dokumenInduk.edit',["id"=>$request->get("id")])->withInput()->withErrors($validator->errors()->toArray());    
             } 
             
             $file = null;
             if($request->has("file")){
-                $fileSystem = new FileSystem(new OptionFileDefault($request->file("file"), "berkas"));
+                $fileSystem = new FileSystem(new OptionFileDefault($request->file("file"), "dokumen_induk"));
                 $file = $fileSystem->storeFileWithReplaceFileAndReturnFileLocation();
             }
 
-            $this->commandBus->dispatch(new UpdatePenilaianCommand(
+            $this->commandBus->dispatch(new UpdateDokumenIndukCommand(
                 $request->get('id'), 
-                $request->get('matriks'),
                 $request->get('nama_berkas'),
                 $request->get('url'),
                 $file,
@@ -97,10 +93,10 @@ class PenilaianController extends Controller
             ));
             Session::flash(TypeNotif::Update->val(), "berhasil ubah data");
 
-            return redirect()->route('penilaian.index');
+            return redirect()->route('dokumenInduk.index');
         } catch (Exception $e) {
             Session::flash(TypeNotif::Error->val(), $e->getMessage());
-            return redirect()->route('penilaian.edit',["id"=>$request->get('id')])->withInput();
+            return redirect()->route('dokumenInduk.edit',["id"=>$request->get('id')])->withInput();
         }
     }
     public function delete($id){
@@ -109,13 +105,13 @@ class PenilaianController extends Controller
             if(empty($id)){
                 throw new Exception("data referensi hapus tidak boleh kosong");
             }            
-            $this->commandBus->dispatch(new DeletePenilaianCommand($id));
+            $this->commandBus->dispatch(new DeleteDokumenIndukCommand($id));
             Session::flash(TypeNotif::Create->val(), "berhasil hapus data");
 
-            return redirect()->route('penilaian.index');
+            return redirect()->route('dokumenInduk.index');
         } catch (Exception $e) {
             Session::flash(TypeNotif::Error->val(), $e->getMessage());
-            return redirect()->route('penilaian.index');
+            return redirect()->route('dokumenInduk.index');
         }
     }
 }

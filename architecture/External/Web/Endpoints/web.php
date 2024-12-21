@@ -3,6 +3,7 @@
 use Architecture\External\Web\Controller\AccountController;
 use Architecture\External\Web\Controller\AuthController;
 use Architecture\External\Web\Controller\DashboardController;
+use Architecture\External\Web\Controller\DokumenIndukController;
 use Architecture\External\Web\Controller\MatriksController;
 use Architecture\External\Web\Controller\PenilaianController;
 use Architecture\External\Web\Controller\UserController;
@@ -47,11 +48,18 @@ Route::middleware([CheckSession::class])->group(function () {
     Route::get('matriks/delete/{id}', [MatriksController::class, 'delete'])->name('matriks.delete');
 
     Route::get('penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
-    Route::get('penilaian/create', [PenilaianController::class, 'create'])->name('penilaian.create');
-    Route::post('penilaian/store', [PenilaianController::class, 'store'])->name('penilaian.store');
+    // Route::get('penilaian/create', [PenilaianController::class, 'create'])->name('penilaian.create');
+    // Route::post('penilaian/store', [PenilaianController::class, 'store'])->name('penilaian.store');
     Route::get('penilaian/edit/{id}', [PenilaianController::class, 'edit'])->name('penilaian.edit');
     Route::post('penilaian/update', [PenilaianController::class, 'update'])->name('penilaian.update');
     Route::get('penilaian/delete/{id}', [PenilaianController::class, 'delete'])->name('penilaian.delete');
+
+    Route::get('dokumenInduk', [DokumenIndukController::class, 'index'])->name('dokumenInduk.index');
+    // Route::get('dokumenInduk/create', [DokumenIndukController::class, 'create'])->name('dokumenInduk.create');
+    // Route::post('dokumenInduk/store', [DokumenIndukController::class, 'store'])->name('dokumenInduk.store');
+    Route::get('dokumenInduk/edit/{id}', [DokumenIndukController::class, 'edit'])->name('dokumenInduk.edit');
+    Route::post('dokumenInduk/update', [DokumenIndukController::class, 'update'])->name('dokumenInduk.update');
+    Route::get('dokumenInduk/delete/{id}', [DokumenIndukController::class, 'delete'])->name('dokumenInduk.delete');
 
     Route::get('account', [AccountController::class, 'index'])->name('account.index');
     Route::post('account/update', [AccountController::class, 'update'])->name('account.update');

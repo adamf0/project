@@ -1,11 +1,11 @@
 @extends('template.index')
  
 @section('page-title')
-    <x-page-title title="{{Session::get('level')=='guest'? 'Dashboard':'LED'}}">
+    <x-page-title title="Dokumen Induk">
         <nav>
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">@if(Session::get('level')=="guest")  @else LED @endif</li>
+            <li class="breadcrumb-item active">Dokumen Induk</li>
             </ol>
         </nav>
     </x-page-title>
@@ -34,17 +34,24 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="tb" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nama Matriks</th>
-                                        <th>Berkas</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-primary btn-add">Tambah</button>
+                            </div>
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table id="tb" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Berkas</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -62,9 +69,6 @@
             </div>
             <div class="modal-body">
                 <div class="row formInputAdd gap-2">
-                        <div class="col-12">
-                            <x-input-select title="Matriks" name="matriks" class="matriks"></x-input-select>
-                        </div>
                         <div class="col-12">
                             <label>Nama Berkas</label>
                             <input type="text" name="nama_berkas" class=" form-control nama_berkas" value="" autocomplete="off">
@@ -101,7 +105,6 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             
             const level = `{{Session::get('level')}}`;
-            matriks = null;
             url = null;
             tahun = null;
             nama_berkas = null;
@@ -116,19 +119,12 @@
             });
 
             let table = eTable({
-                url: `{{ route('datatable.Penilaian.index') }}?level=${level}&tahun={{date('Y')}}`,
+                url: `{{ route('datatable.DokumenInduk.index') }}?level=${level}&tahun={{date('Y')}}`,
             }, [
                 {
                     data: 'DT_RowIndex', 
                     name: 'DT_RowIndex', 
                     sWidth:'3%'
-                },
-                {
-                    data: 'nama_matriks', 
-                    name: 'nama_matriks',
-                    render: function ( data, type, row, meta ) {
-                        return data;
-                    }
                 },
                 {
                     data: 'berkas_render', 
@@ -137,19 +133,21 @@
                         return data;
                     }
                 },
+                {
+                    data: 'action_render', 
+                    name: 'action_render',
+                    render: function ( data, type, row, meta ) {
+                        return data;
+                    }
+                },
             ]);
-            load_dropdown('.matriks',null,`{{ route('select2.Matriks.List') }}`,null,'-- Pilih Matriks --');
-
-            $(".matriks").on('select2:select', async function(e) {
-                matriks = $(this).val();
-            });
 
             // $('.btn-filter').click(function(e) {
             //     e.preventDefault();
             //     let tahun = $('.tahun_filter').val();
 
             //     console.log(tahun)
-            //     table.ajax.url(`{{ route('datatable.Penilaian.index') }}?level=${level}&tahun=${tahun}`).load();
+            //     table.ajax.url(`{{ route('datatable.DokumenInduk.index') }}?level=${level}&tahun=${tahun}`).load();
             // });
             btnSave.click(function(e) {
                 e.preventDefault();
@@ -171,7 +169,6 @@
 
                 if(!error_file){
                     let dataForm = new FormData();
-                    dataForm.append("matriks", matriks);
                     dataForm.append("nama_berkas", $(".nama_berkas").val());
                     dataForm.append("url", $(".url").val());
                     dataForm.append('file', fileInput);
@@ -180,7 +177,7 @@
                     formInputAdd.hide();
                     formLoaderAdd.show();
                     ERequest(
-                        new Url(`{{route('api.Penilaian.create')}}`, "post", {
+                        new Url(`{{route('api.DokumenInduk.create')}}`, "post", {
                             'X-CSRF-TOKEN': CSRF_TOKEN
                         }),
                         dataForm,
@@ -204,7 +201,7 @@
                 }
             });
 
-            $('#tb tbody').on('click', '.btn-add', function(e) {
+            $('.btn-add').click(function(e) {
                 e.preventDefault();
 
                 formInputAdd.show();

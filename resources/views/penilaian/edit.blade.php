@@ -1,11 +1,11 @@
 @extends('template.index')
  
 @section('page-title')
-    <x-page-title title="Penilaian">
+    <x-page-title title="LED">
         <nav>
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('penilaian.index') }}">Penilaian</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('penilaian.index') }}">LED</a></li>
             <li class="breadcrumb-item active">Ubah</li>
             </ol>
         </nav>
@@ -44,9 +44,6 @@
                                         Max Ukuran File Upload: <b>5Mb</b><br>
                                         Tipe File: <b>PDF</b><br>
                                         File: {{ $penilaian?->GetFile() }}
-                                    </div>
-                                    <div class="col-12">
-                                        <x-input-text title="Tahun" name="tahun" default="{{ old('tahun',$penilaian->GetTahun()) }}"/>
                                     </div>
                                 </div>
                                 <input type="submit" name="submit" class="btn btn-primary" value="submit">

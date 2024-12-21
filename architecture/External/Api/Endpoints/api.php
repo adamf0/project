@@ -2,6 +2,7 @@
 
 //use Architecture\External\Api\Controller\ApiAdministrasiAreaController;
 
+use Architecture\External\Api\Controller\ApiDokumenIndukController;
 use Architecture\External\Api\Controller\ApiPenilaianController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 Route::post('/penilaian', [ApiPenilaianController::class,'create'])->name('api.Penilaian.create');
+Route::post('/dokumen_induk', [ApiDokumenIndukController::class,'create'])->name('api.DokumenInduk.create');
